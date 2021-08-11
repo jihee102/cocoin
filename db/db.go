@@ -1,6 +1,8 @@
 package db
 
 import (
+	"fmt"
+
 	"github.com/boltdb/bolt"
 	"github.com/jihee102/explorer/utils"
 )
@@ -11,12 +13,13 @@ const (
 	dbName       = "cocoin.db"
 	dataBucket   = "data"
 	blocksBucket = "blocks"
+	checkpoint   = "checkpoint"
 )
 
 func DB() *bolt.DB {
 	if db == nil {
 		//init db
-		dbPointer, err := bolt.Open(dbName, 6500, nil)
+		dbPointer, err := bolt.Open(dbName, 0600, nil)
 		db = dbPointer
 		utils.HandleErr(err)
 		err = db.Update(func(t *bolt.Tx) error {
@@ -29,4 +32,34 @@ func DB() *bolt.DB {
 
 	}
 	return db
+}
+
+func SaveBlock(hash string, data []byte) {
+	fmt.Printf("Saving Block %s\nData: %b\n", hash, data)
+	err := DB().Update(func(t *bolt.Tx) error {
+		bucket := t.Bucket([]byte(blocksBucket))
+		err := bucket.Put([]byte(hash), data)
+		return err
+	})
+	utils.HandleErr(err)
+}
+
+func SaveBlockchain(data []byte) {
+	err := DB().Update(func(t *bolt.Tx) error {
+		bucket := t.Bucket([]byte(dataBucket))
+		err := bucket.Put([]byte(checkpoint), data)
+		return err
+	})
+	utils.HandleErr(err)
+
+}
+
+func Checkpoint() []byte {
+	var data []byte
+	DB().View(func(t *bolt.Tx) error {
+		bucket := t.Bucket([]byte(dataBucket))
+		data = bucket.Get([]byte(checkpoint))
+		return nil
+	})
+	return data
 }

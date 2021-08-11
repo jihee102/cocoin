@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/jihee102/explorer/cli"
+	"github.com/jihee102/explorer/blockchain"
 )
 
 // const port string = ":4000"
@@ -62,9 +62,14 @@ func main() {
 	// go rest.Start(4000)
 	// explorer.Start(5000)
 
-	cli.Start()
+	// cli.Start()
+
 	// http.HandleFunc("/", documentation)
 	// http.HandleFunc("/blocks", blocks)
 	// fmt.Printf("Listening on http://localhost%s", port)
 	// log.Fatal(http.ListenAndServe(port, nil))
+
+	blockchain.Blockchain()
+	// blockchain.Blockchain().AddBlock("seconde")
+	// blockchain.Blockchain().AddBlock("third")
 }
