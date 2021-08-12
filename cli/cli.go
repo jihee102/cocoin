@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"runtime"
 
 	"github.com/jihee102/explorer/explorer"
 	"github.com/jihee102/explorer/rest"
@@ -14,7 +15,8 @@ func usage() {
 	fmt.Printf("Please use the following commands:\n\n")
 	fmt.Printf("-port:		Set the PORT of the server\n")
 	fmt.Printf("-mode:		Choose between 'html' and 'rest' ")
-	os.Exit(0)
+	// os.Exit(0)
+	runtime.Goexit()
 }
 func Start() {
 	if len(os.Args) == 1 {
