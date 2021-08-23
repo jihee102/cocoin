@@ -14,3 +14,13 @@ POST http://localhost:4000/blocks
 ###
 
 http://localhost:4000/blocks/303b2ac2e6a21240778aed4d77267ab082d8968ad922a924e2e065f08ee35d7c
+
+###
+http://localhost:4000/status
+
+
+###
+http://localhost:4000/balance/coco
+
+###
+http://localhost:4000/balance/coco?total=true
